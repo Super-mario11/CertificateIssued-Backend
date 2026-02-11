@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id           Int           @id @default(autoincrement())
+  fullName     String        @map("full_name")
+  email        String?       @unique
+  profileImage String?       @map("profile_image")
+  allowMultipleCertificates Boolean @default(true) @map("allow_multiple_certificates")
+  certificates Certificate[]
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt
+
+  @@map("students")
+}
+
+model Certificate {
+  id             Int               @id @default(autoincrement())
+  certificateId  String            @unique @map("certificate_id")
+  studentId      Int               @map("student_id")
+  courseName     String            @map("course_name")
+  skillsLearned  String            @map("skills_learned")
+  comments       String?           @map("comments")
+  issueDate      DateTime          @map("issue_date")
+  certificateUrl String            @map("certificate_url")
+  handoverUrl    String?           @map("handover_url")
+  status         CertificateStatus @default(ACTIVE)
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+
+  @@map("certificates")
+}
+
+enum CertificateStatus {
+  ACTIVE
+  REVOKED
+}
