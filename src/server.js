@@ -24,10 +24,6 @@ app.set("trust proxy", 1);
 app.use(
   cors({
     origin(origin, callback) {
-      // Temporary CORS debug: log origin and allowlist on each request
-      // Remove after verifying deployed frontend origin.
-      // eslint-disable-next-line no-console
-      console.log("CORS check:", { origin, allowlist: corsOrigins });
       if (!origin) return callback(null, true);
       if (corsOrigins.length === 0 || corsOrigins.includes(origin)) {
         return callback(null, true);
