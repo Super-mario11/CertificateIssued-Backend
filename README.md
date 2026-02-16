@@ -35,20 +35,48 @@ Required:
 - `CLOUDINARY_FOLDER` (optional, default `CertificateIssued`)
 - `PORT` (Render injects this automatically)
 
-Example:
+Value guide:
+- `DATABASE_URL`: full Postgres connection string for your backend DB.
+- `JWT_SECRET`: long random secret (at least 32 chars).
+- `ADMIN_PASSWORD`: initial admin password used only to bootstrap first hash.
+- `ADMIN_EMAIL`: admin inbox that receives reset links.
+- `APP_BASE_URL`: frontend origin where `/reset-password` route exists.
+- `RESEND_API_KEY`: key from Resend dashboard (format `re_...`).
+- `RESEND_FROM_EMAIL`: verified sender in Resend (same verified domain).
+- `CORS_ORIGIN`: include all frontend origins that call backend APIs.
+
+Local example (`backend/.env`):
 
 ```env
-DATABASE_URL="postgresql://..."
-JWT_SECRET="strong-secret"
-ADMIN_PASSWORD="strong-admin-password"
-ADMIN_EMAIL="admin@example.com"
-APP_BASE_URL="https://your-frontend.vercel.app"
-RESEND_API_KEY="re_xxx"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DBNAME?sslmode=require"
+JWT_SECRET="replace_with_a_very_long_random_secret_32_plus_chars"
+ADMIN_PASSWORD="replace_with_strong_admin_password"
+ADMIN_EMAIL="admin@yourdomain.com"
+APP_BASE_URL="http://localhost:5173"
+RESEND_API_KEY="re_xxxxxxxxxxxxxxxxx"
 RESEND_FROM_EMAIL="no-reply@yourdomain.com"
-CORS_ORIGIN="http://localhost:5173,https://your-frontend.vercel.app"
-CLOUDINARY_CLOUD_NAME="..."
-CLOUDINARY_API_KEY="..."
-CLOUDINARY_API_SECRET="..."
+CORS_ORIGIN="http://localhost:5173"
+CLOUDINARY_CLOUD_NAME="your_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
+CLOUDINARY_FOLDER="CertificateIssued"
+PORT=5000
+```
+
+Production example:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DBNAME?sslmode=require"
+JWT_SECRET="replace_with_a_very_long_random_secret_32_plus_chars"
+ADMIN_PASSWORD="replace_with_strong_admin_password"
+ADMIN_EMAIL="admin@yourdomain.com"
+APP_BASE_URL="https://your-frontend-domain.com"
+RESEND_API_KEY="re_xxxxxxxxxxxxxxxxx"
+RESEND_FROM_EMAIL="no-reply@yourdomain.com"
+CORS_ORIGIN="https://your-frontend-domain.com,https://www.your-frontend-domain.com"
+CLOUDINARY_CLOUD_NAME="your_cloud_name"
+CLOUDINARY_API_KEY="your_api_key"
+CLOUDINARY_API_SECRET="your_api_secret"
 CLOUDINARY_FOLDER="CertificateIssued"
 PORT=5000
 ```
