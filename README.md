@@ -24,6 +24,10 @@ Required:
 - `DATABASE_URL`
 - `JWT_SECRET`
 - `ADMIN_PASSWORD`
+- `ADMIN_EMAIL`
+- `APP_BASE_URL` (frontend origin used in password reset link)
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
 - `CORS_ORIGIN` (comma-separated allowed frontend origins)
 - `CLOUDINARY_CLOUD_NAME`
 - `CLOUDINARY_API_KEY`
@@ -37,6 +41,10 @@ Example:
 DATABASE_URL="postgresql://..."
 JWT_SECRET="strong-secret"
 ADMIN_PASSWORD="strong-admin-password"
+ADMIN_EMAIL="admin@example.com"
+APP_BASE_URL="https://your-frontend.vercel.app"
+RESEND_API_KEY="re_xxx"
+RESEND_FROM_EMAIL="no-reply@yourdomain.com"
 CORS_ORIGIN="http://localhost:5173,https://your-frontend.vercel.app"
 CLOUDINARY_CLOUD_NAME="..."
 CLOUDINARY_API_KEY="..."
@@ -84,6 +92,10 @@ npm run dev
 ## API Notes
 - Health endpoint: `GET /health`
 - Public endpoints under `/api`
+- Auth endpoints:
+  - `POST /api/auth/login`
+  - `POST /api/auth/forgot-password` (no body)
+  - `POST /api/auth/reset-password` (`token`, `newPassword`)
 - Admin endpoints under:
   - `/api/admin/certificates`
   - `/api/admin/students`
